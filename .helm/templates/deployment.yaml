@@ -15,5 +15,5 @@ spec:
       containers:
         - name: {{ .Release.Name }}
           image: {{ .Values.image.url }}
-      imagePullSecrets:
-        - name: {{ .Release.Name }}-credentials
+      # imagePullSecrets:
+      #   - name: {{ .Release.Name }}-credentials
