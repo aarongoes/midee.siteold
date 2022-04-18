@@ -104,6 +104,12 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v1
+      - id: replacedots
+        uses: mad9000/actions-find-and-replace-string@1
+        with:
+          source: ${{ github.event.repository.name }}
+          find: '.'
+          replace: '-'
       - name: Prep helm chart
         run: |
           mv ./.helm/Chart.yaml ./.helm/Chart.old.yaml &&
@@ -113,5 +119,5 @@ jobs:
       - name: Deploy
         uses: WyriHaximus/github-action-helm3@v2
         with:
-          exec: helm upgrade ${{ github.event.repository.name }} ./.helm/ --install --wait --atomic --namespace=midee --create-namespace --set=app.name=${{ github.event.repository.name }} --set=image.url=${{ needs.build.outputs.url }}
+          exec: helm upgrade ${{ steps.replacedots.outputs.value }} ./.helm/ --install --wait --atomic --namespace=midee --create-namespace --set=app.name=${{ steps.replacedots.outputs.value }} --set=image.url=${{ needs.build.outputs.url }}
           kubeconfig: '${{ secrets.KUBECONFIG }}'
