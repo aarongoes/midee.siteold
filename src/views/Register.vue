@@ -1,5 +1,5 @@
 <template>
   <main>
-    <p>test</p>
+    <p>asdf</p>
   </main>
 </template>
